@@ -5,9 +5,8 @@ from sqlalchemy.orm import sessionmaker
 class CampaignFacade:
     session = None
 
-    def __init__(self):
-        session = sessionmaker()
-        self.session = session()
+    def __init__(self,session):
+        self.session = session
 
     def create_campaign(self, campaign: Campaign):
         self.session.add(campaign)

@@ -1,23 +1,75 @@
 import time
-
-from sqlalchemy.orm import sessionmaker
-
 from pvtranslator.entities.campaign import Campaign
 from pvtranslator.facades.campaign_facade import CampaignFacade
 from pvtranslator.start import start_engine
 
 
 def test_create():
-    start_engine()
+    scoped_session = start_engine()
+    session = scoped_session()
 
-    Session = sessionmaker()
-    session = Session()
+    campaign = Campaign(name='sample', date=time.localtime(time.time()), module_id=1)
 
-    campaign = Campaign(name='sample', date=time.localtime(time.time()))
-
-    facade = CampaignFacade()
+    facade = CampaignFacade(session)
     facade.create_campaign(campaign=campaign)
 
-    db_user = session.query(Campaign).filter_by(name='sample')
+    query = session.query(Campaign).filter_by(id=campaign.id)
+    campaign_query = query.all()
 
-    assert campaign is db_user
+    assert len(campaign_query) == 1
+    assert campaign_query[0] is campaign
+
+    session.close()
+
+
+def test_update():
+    scoped_session = start_engine()
+    session = scoped_session()
+
+    # get first campaign
+    query = session.query(Campaign).filter_by(id=1)
+    campaign_query = query.all()
+    campaign = campaign_query[0]
+    campaign.name = campaign.name + "_update"
+
+    # update
+    facade = CampaignFacade(session)
+    facade.commit_campaign_update()
+
+    # get campaign again
+    query = session.query(Campaign).filter_by(id=1)
+    campaign_query = query.all()
+
+    assert len(campaign_query) == 1
+    assert campaign_query[0] is campaign
+
+    session.close()
+
+
+def test_delete():
+
+    scoped_session = start_engine()
+    session = scoped_session()
+
+    # get first campaign
+    query = session.query(Campaign).filter_by(id=1)
+    campaign_query = query.all()
+    campaign = campaign_query[0]
+
+    # delete
+    facade = CampaignFacade(session)
+    facade.delete_campaign(campaign)
+
+    # get campaign again
+    query = session.query(Campaign).filter_by(id=1)
+    campaign_query = query.all()
+
+    assert len(campaign_query) == 0
+
+    session.close()
+
+
+def test():
+    test_create()
+    test_update()
+    test_delete()
