@@ -24,7 +24,7 @@ class CampaignFacade:
         persistent_campaign = self.get_module_by_id(campaign.id)
         persistent_campaign.name = campaign.name
         persistent_campaign.date = campaign.date
-        # persistent_campaign.module_id = campaign.module_id
+        persistent_campaign.module_id = campaign.module_id
         self.session.commit()
 
     def get_campaign_by_name(self, name: Unicode):
@@ -42,3 +42,11 @@ class CampaignFacade:
             return None
         else:
             return campaign_query[0]
+
+    def get_campaigns_from_module_id(self, module_id):
+        query = self.session.query(Campaign).filter_by(module_id=module_id)
+        campaign_query = query.all()
+        if len(campaign_query) == 0:
+            return []
+        else:
+            return campaign_query
