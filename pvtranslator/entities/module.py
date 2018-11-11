@@ -1,15 +1,15 @@
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import relationship
+from spyne import UnsignedInteger32, Unicode, Array, table
+from pvtranslator.tableModel import TableModel
+from pvtranslator.entities.campaign import Campaign
 
-from pvtranslator.base import Base
 
-
-class Module(Base):
+class Module(TableModel):
     __tablename__ = 'module'
+    __namespace__ = 'pvtranslator'
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String(30),nullable=False)
-    campaigns = relationship("Campaign", back_populates="module", cascade="all, delete-orphan")
+    id = UnsignedInteger32(pk=True)
+    name = Unicode(32,unique=True,nullable=False)
+    campaigns = Array(Campaign).store_as(table(right='module_id'))
 
     def __repr__(self):
         return "Module(name='%s')" % self.name

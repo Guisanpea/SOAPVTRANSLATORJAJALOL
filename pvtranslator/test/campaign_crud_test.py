@@ -34,7 +34,7 @@ def test_update():
 
     # update
     facade = CampaignFacade(session)
-    facade.commit_campaign_update()
+    facade.update_campaign(campaign)
 
     # get campaign again
     query = session.query(Campaign).filter_by(id=1)

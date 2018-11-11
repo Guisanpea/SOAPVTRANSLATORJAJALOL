@@ -8,7 +8,7 @@ def test_create():
     session = scoped_session()
 
     # create module
-    module = Module(name="m1")
+    module = Module(name="sample")
     facade = ModuleFacade(session)
     facade.create_module(module=module)
 
@@ -35,7 +35,7 @@ def test_update():
 
     # update
     facade = ModuleFacade(session)
-    facade.commit_module_update()
+    facade.update_module(module)
 
     # get module again
     query = session.query(Module).filter_by(id=1)

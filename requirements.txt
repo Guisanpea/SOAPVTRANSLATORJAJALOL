@@ -1,4 +1,4 @@
 SQLAlchemy==1.2.13
-spyne
+spyne==2.13.2a0
 mysql-connector-python
 pytest

@@ -1,17 +1,14 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey
-from sqlalchemy.orm import relationship
-
-from pvtranslator.base import Base
+from spyne import UnsignedInteger32, Unicode, Date
+from pvtranslator.tableModel import TableModel
 
 
-class Campaign(Base):
+class Campaign(TableModel):
     __tablename__ = 'campaign'
+    __namespace__ = 'pvtranslator'
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String(30),nullable=False)
-    date = Column(Date,nullable=False)
-    module_id = Column(Integer, ForeignKey("module.id"),nullable=False)
-    module = relationship("Module", back_populates="campaigns", cascade="save-update")
+    id = UnsignedInteger32(pk=True)
+    name = Unicode(32,unique=True, nullable=False)
+    date = Date(nullable=False)
 
     def __repr__(self):
         return "<Campaign(name='" + str(self.name) + "', date='" + str(self.date) + "')>"
