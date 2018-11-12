@@ -16,7 +16,7 @@ def start_engine():
 def start_application():
     from pvtranslator.services import get_application
     wsgi_app = WsgiApplication(get_application())
-    server = make_server('127.0.0.1', 8000, wsgi_app)
+    server = make_server('127.0.0.1', 8050, wsgi_app)
     print("server started")
     server.serve_forever()
 
