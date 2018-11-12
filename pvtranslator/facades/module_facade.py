@@ -40,3 +40,11 @@ class ModuleFacade:
             return None
         else:
             return module_query[0]
+
+    def get_all(self):
+        query = self.session.query(Module)
+        module_query = query.all()
+        if len(module_query) == 0:
+            return None
+        else:
+            return module_query

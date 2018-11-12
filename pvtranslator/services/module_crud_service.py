@@ -1,4 +1,4 @@
-from spyne import ServiceBase, rpc, Integer, UnsignedInteger32
+from spyne import ServiceBase, rpc, Integer, UnsignedInteger32, Iterable
 from pvtranslator.facades.module_facade import ModuleFacade
 from pvtranslator.start import start_engine
 from pvtranslator.entities.module import Module
@@ -42,6 +42,16 @@ class ModuleCrudService(ServiceBase):
     # return module by id
     @rpc(Integer, _returns=Module)
     def get_module_by_id(ctx, module_id):
+        scoped_session = start_engine()
+        session = scoped_session()
+        facade = ModuleFacade(session)
+        module = facade.get_module_by_id(module_id)
+        session.close()
+        return module
+
+# return all modules in db
+    @rpc(_returns=Iterable(Module))
+    def get_module_by_id(ctx):
         scoped_session = start_engine()
         session = scoped_session()
         facade = ModuleFacade(session)
