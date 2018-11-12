@@ -1,13 +1,18 @@
+"""Campaign entity module"""
 from spyne import UnsignedInteger32, Unicode, Date
 from pvtranslator.tableModel import TableModel
 
 
 class Campaign(TableModel):
+    """
+    Represents a Campaign entity
+    """
+
     __tablename__ = 'campaign'
     __namespace__ = 'pvtranslator'
 
     id = UnsignedInteger32(pk=True)
-    name = Unicode(32,unique=True, nullable=False)
+    name = Unicode(32, unique=True, nullable=False)
     date = Date(nullable=False)
     module_id = UnsignedInteger32(fk="module.id", nullable=False)
 

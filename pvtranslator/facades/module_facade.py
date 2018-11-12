@@ -6,7 +6,7 @@ from pvtranslator.facades.campaign_facade import CampaignFacade
 class ModuleFacade:
     session = None
 
-    def __init__(self,session):
+    def __init__(self, session):
         self.session = session
 
     def create_module(self, module: Module):
