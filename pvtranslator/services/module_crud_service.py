@@ -51,10 +51,10 @@ class ModuleCrudService(ServiceBase):
 
 # return all modules in db
     @rpc(_returns=Iterable(Module))
-    def get_module_by_id(ctx):
+    def get_all(ctx):
         scoped_session = start_engine()
         session = scoped_session()
         facade = ModuleFacade(session)
-        module = facade.get_module_by_id(module_id)
+        modules = facade.get_all()
         session.close()
-        return module
+        return modules
