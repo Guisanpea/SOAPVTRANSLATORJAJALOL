@@ -74,6 +74,3 @@ def test():
     test_create()
     test_update()
     test_delete()
-
-
-

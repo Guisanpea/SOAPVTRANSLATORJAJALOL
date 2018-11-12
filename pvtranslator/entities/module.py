@@ -1,6 +1,5 @@
 from spyne import UnsignedInteger32, Unicode, Iterable
 from pvtranslator.tableModel import TableModel
-from pvtranslator.entities.campaign import Campaign
 
 
 class Module(TableModel):
