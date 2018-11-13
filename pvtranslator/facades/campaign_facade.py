@@ -6,7 +6,7 @@ from pvtranslator.entities.campaign import Campaign
 class CampaignFacade:
     session = None
 
-    def __init__(self,session):
+    def __init__(self, session):
         self.session = session
 
     def create_campaign(self, campaign: Campaign):
@@ -20,8 +20,8 @@ class CampaignFacade:
     def read_campaigns(self):
         return self.session.query(Campaign).order_by(Campaign.date)
 
-    def update_campaign(self, campaign : Campaign):
-        persistent_campaign = self.get_module_by_id(campaign.id)
+    def update_campaign(self, campaign: Campaign):
+        persistent_campaign = self.get_campaign_by_id(campaign.id)
         persistent_campaign.name = campaign.name
         persistent_campaign.date = campaign.date
         persistent_campaign.module_id = campaign.module_id
