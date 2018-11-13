@@ -25,7 +25,7 @@ class CampaignCrudService(ServiceBase):
         scoped_session = start_engine()
         session = scoped_session()
         facade = CampaignFacade(session)
-        facade.delete_module(campaign=campaign)
+        facade.delete_campaign(campaign=campaign)
         session.close()
 
     # update campaign
@@ -34,7 +34,7 @@ class CampaignCrudService(ServiceBase):
         scoped_session = start_engine()
         session = scoped_session()
         facade = CampaignFacade(session)
-        facade.update_module(module=campaign)
+        facade.update_campaign(campaign=campaign)
         session.close()
 
     # return campaign by id
